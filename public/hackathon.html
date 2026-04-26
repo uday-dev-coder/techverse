@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hackathon — Techverse 2025</title>
+<link rel="icon" href="/images/Hackathon-icon.png" type="image/png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Space+Grotesk:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/css/event.css"/>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="/">Tech<span>verse</span></a>
+  <a href="/" class="back-link">← Back</a>
+</nav>
+
+<section class="ev-hero">
+  <div class="ev-hero-img" style="background-image:url('/images/hackathon.jpg')"></div>
+  <div class="ev-hero-bg-num">01</div>
+  <div class="ev-hero-content">
+    <div class="ev-kicker">💻 6-Hour Coding Battle</div>
+    <h1>Hackathon</h1>
+    <p>Build. Compete. Innovate.</p>
+  </div>
+</section>
+<div class="ev-rule"></div>
+
+<!-- RULES -->
+<div class="ev-section">
+  <div class="ev-sec-kicker">Rules</div>
+  <h2 class="ev-sec-title">Rules & Regulations</h2>
+  <div class="ev-sec-rule"></div>
+  <div class="rules-list">
+<div class="rule-item rv" style="transition-delay:0.00s"><div class="rule-n">01</div><div class="rule-body"><strong>Team Composition</strong><span>Max 4 members. No extra members.</span></div></div>
+<div class="rule-item rv" style="transition-delay:0.08s"><div class="rule-n">02</div><div class="rule-body"><strong>Duration</strong><span>6 hours total. Submit before time ends.</span></div></div>
+<div class="rule-item rv" style="transition-delay:0.16s"><div class="rule-n">03</div><div class="rule-body"><strong>Fee</strong><span>Rs.200/team via UTR/Transaction ID.</span></div></div>
+<div class="rule-item rv" style="transition-delay:0.24s"><div class="rule-n">04</div><div class="rule-body"><strong>Equipment</strong><span>Bring laptops with necessary tools.</span></div></div>
+<div class="rule-item rv" style="transition-delay:0.32s"><div class="rule-n">05</div><div class="rule-body"><strong>Judging</strong><span>Innovation, usability, design, impact.</span></div></div>
+
+  </div>
+</div>
+<div class="ev-rule"></div>
+
+<!-- REGISTRATION WIZARD -->
+<div class="ev-section" id="reg-section">
+
+  <!-- STEP 1 -->
+  <div id="step-form">
+    <div class="step-indicator">
+      <div class="step-dot active" id="sdot-1">1</div>
+      <div class="step-line"></div>
+      <div class="step-dot" id="sdot-2">2</div>
+      <div class="step-line"></div>
+      <div class="step-dot" id="sdot-3">3</div>
+    </div>
+    <div class="ev-sec-kicker" style="margin-top:1.5rem">Step 1 of 3 — Team Details</div>
+    <h2 class="ev-sec-title">Register Your Team</h2>
+    <div class="ev-sec-rule"></div>
+    <div class="form-box rv">
+      <div class="form-box-title">Team Registration</div>
+      <div class="form-box-sub">All fields required · Registration Fee: ₹200</div>
+      <form id="reg-form">
+        <input type="hidden" name="event" value="hackathon"/>
+        <input class="form-field" type="text" name="team_name" placeholder="Team Name" required/>
+        <div class="team-row form-gap"><input class="form-field" type="text" name="members[]" placeholder="Member 1 Name" required/><input class="form-field" type="text" name="members[]" placeholder="Member 2 Name" required/><input class="form-field" type="text" name="members[]" placeholder="Member 3 Name" required/><input class="form-field" type="text" name="members[]" placeholder="Member 4 Name" required/></div>
+        <input class="form-field" type="tel" name="contact" placeholder="Contact Number" required/>
+        <input class="form-field" type="email" name="email" placeholder="Email Address" required/>
+        <button class="submit-btn" type="submit">Continue to Payment →</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div id="step-payment" style="display:none">
+    <div class="step-indicator">
+      <div class="step-dot done" id="sdot-1b">✓</div>
+      <div class="step-line active"></div>
+      <div class="step-dot active" id="sdot-2b">2</div>
+      <div class="step-line"></div>
+      <div class="step-dot" id="sdot-3b">3</div>
+    </div>
+    <div class="ev-sec-kicker" style="margin-top:1.5rem">Step 2 of 3 — Payment</div>
+    <h2 class="ev-sec-title">Pay Registration Fee</h2>
+    <div class="ev-sec-rule"></div>
+    <div class="payment-box rv">
+      <div class="pay-left">
+        <div class="pay-label">Scan &amp; Pay via Any UPI App</div>
+        <div class="qr-wrap">
+          <div class="qr-frame">
+            <img id="qr-img" src="/api/qr/TEMP/200/TEMP" alt="UPI QR Code" width="200" height="200"/>
+          </div>
+          <div class="qr-corner qr-tl"></div>
+          <div class="qr-corner qr-tr"></div>
+          <div class="qr-corner qr-bl"></div>
+          <div class="qr-corner qr-br"></div>
+        </div>
+        <div class="pay-upi-row">
+          <span class="pay-upi-label">UPI ID</span>
+          <span class="pay-upi-val" onclick="copyUPI()" title="Click to copy">9876543210@upi <small>📋</small></span>
+        </div>
+        <div class="pay-amount-box">
+          <span class="pay-amount-label">Amount</span>
+          <span class="pay-amount-num">₹200</span>
+        </div>
+        <div class="pay-apps">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/120px-Google_Pay_Logo.svg.png" alt="GPay" height="22" style="opacity:.5;filter:grayscale(1)"/>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/PhonePe_Logo.svg/120px-PhonePe_Logo.svg.png" alt="PhonePe" height="22" style="opacity:.5;filter:grayscale(1)"/>
+        </div>
+      </div>
+      <div class="pay-right">
+        <div class="pay-instructions">
+          <div class="pi-title">How to Pay</div>
+          <div class="pi-step"><span class="pi-num">1</span> Open GPay, PhonePe, or any UPI app</div>
+          <div class="pi-step"><span class="pi-num">2</span> Scan the QR code or pay to UPI ID</div>
+          <div class="pi-step"><span class="pi-num">3</span> Enter exact amount <strong>₹200</strong></div>
+          <div class="pi-step"><span class="pi-num">4</span> After payment, get the UTR/Reference number</div>
+          <div class="pi-step"><span class="pi-num">5</span> Enter it below and click Confirm</div>
+        </div>
+        <div class="utr-section">
+          <label class="form-label">UTR / Transaction Reference Number <span style="color:#f87171">*</span></label>
+          <input class="form-field" type="text" id="utr-input" placeholder="e.g. 123456789012" maxlength="30"/>
+          <div class="utr-hint">12-digit number from your UPI app payment receipt</div>
+          <div class="utr-error" id="utr-error"></div>
+        </div>
+        <button class="submit-btn" id="confirm-pay-btn" onclick="confirmPayment()">
+          ✓ Confirm & Complete Registration
+        </button>
+        <button class="back-btn-sm" onclick="goBack()">← Edit Details</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="step-confirm" style="display:none">
+    <div class="step-indicator">
+      <div class="step-dot done">✓</div>
+      <div class="step-line active"></div>
+      <div class="step-dot done">✓</div>
+      <div class="step-line active"></div>
+      <div class="step-dot done active">✓</div>
+    </div>
+    <div class="ev-sec-kicker" style="margin-top:1.5rem">Registration Complete!</div>
+    <h2 class="ev-sec-title">You're In! 🎉</h2>
+    <div class="ev-sec-rule"></div>
+    <div class="confirm-final" id="confirm-card">
+      <div class="cf-header">
+        <div class="cf-icon">🏆</div>
+        <div>
+          <div class="cf-event-name">Hackathon</div>
+          <div class="cf-tagline">Registration Confirmed · Techverse 2025</div>
+        </div>
+      </div>
+      <div class="cf-regid-wrap">
+        <span class="cf-regid-label">Registration ID</span>
+        <span class="cf-regid" id="cf-regid"></span>
+      </div>
+      <div class="cf-details" id="cf-details"></div>
+      <div class="cf-actions">
+        <a class="cf-receipt-btn" id="cf-receipt-link" href="#" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1h8l4 4v10H2V1zm7 0v4h4M5 7h6M5 9h6M5 11h4"/></svg>
+          View & Print Receipt
+        </a>
+        <button class="cf-share-btn" onclick="shareReg()">Share 🔗</button>
+      </div>
+      <div class="cf-note">
+        📌 <strong>Important:</strong> Save your Registration ID. Present it on event day (May 15–16, 2025).
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ev-rule"></div>
+
+<!-- COORDINATORS -->
+<div class="ev-section">
+  <div class="ev-sec-kicker">Contact</div>
+  <h2 class="ev-sec-title">Event Coordinators</h2>
+  <div class="ev-sec-rule"></div>
+  <div class="coord-row">
+<div class="coord-card rv"><img src="/images/avatar-boy.png" alt="Ravi Kumar"/><div class="coord-name">Ravi Kumar</div><div class="coord-info">📞 1478965230<br/>✉ ravi.techverse@gmail.com</div></div>
+<div class="coord-card rv"><img src="/images/avatar-girl.png" alt="Priya"/><div class="coord-name">Priya</div><div class="coord-info">📞 7894561230<br/>✉ priya.techverse@gmail.com</div></div>
+
+  </div>
+</div>
+
+<footer>© 2025 Techverse · Hackathon · BCA Department</footer>
+
+<!-- TOAST container -->
+<div id="toast-container"></div>
+
+<script>
+const EVENT_ID  = 'hackathon';
+const EVENT_FEE = 200;
+let formData = {};
+let regId = '';
+
+// Reveal
+const rObs = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in')}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(e=>rObs.observe(e));
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40));
+
+// STEP 1 submit
+document.getElementById('reg-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const fd = new FormData(this);
+  formData = {
+    event:     fd.get('event'),
+    team_name: fd.get('team_name').trim(),
+    members:   fd.getAll('members[]').map(m=>m.trim()).filter(Boolean),
+    contact:   fd.get('contact').trim(),
+    email:     fd.get('email').trim(),
+  };
+  if (!formData.team_name) return showToast('Enter a team name','error');
+  if (formData.members.length === 0) return showToast('Add at least one member','error');
+
+  // Load QR with event+fee
+  document.getElementById('qr-img').src = `/api/qr/${EVENT_ID}/${EVENT_FEE}/${encodeURIComponent(formData.team_name)}`;
+
+  document.getElementById('step-form').style.display    = 'none';
+  document.getElementById('step-payment').style.display = 'block';
+  window.scrollTo({top: document.getElementById('reg-section').offsetTop - 80, behavior:'smooth'});
+});
+
+function goBack() {
+  document.getElementById('step-payment').style.display = 'none';
+  document.getElementById('step-form').style.display    = 'block';
+  window.scrollTo({top: document.getElementById('reg-section').offsetTop - 80, behavior:'smooth'});
+}
+
+async function confirmPayment() {
+  const utr = document.getElementById('utr-input').value.trim();
+  const errEl = document.getElementById('utr-error');
+  errEl.textContent = '';
+  if (!utr) { errEl.textContent = 'Please enter the UTR / Transaction ID'; return; }
+  if (utr.length < 6) { errEl.textContent = 'UTR must be at least 6 characters'; return; }
+
+  const btn = document.getElementById('confirm-pay-btn');
+  btn.textContent = '⏳ Registering...';
+  btn.disabled = true;
+
+  try {
+    const res  = await fetch('/api/register', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({...formData, utr})
+    });
+    const data = await res.json();
+
+    if (!data.success) {
+      errEl.textContent = data.error || 'Registration failed. Please try again.';
+      btn.textContent = '✓ Confirm & Complete Registration';
+      btn.disabled = false;
+      return;
+    }
+    regId = data.reg_id;
+    showStep3(data.registration);
+  } catch(err) {
+    errEl.textContent = 'Network error. Check connection and try again.';
+    btn.textContent = '✓ Confirm & Complete Registration';
+    btn.disabled = false;
+  }
+}
+
+function showStep3(reg) {
+  document.getElementById('step-payment').style.display = 'none';
+  document.getElementById('step-confirm').style.display = 'block';
+
+  document.getElementById('cf-regid').textContent = reg.reg_id;
+  document.getElementById('cf-receipt-link').href  = `/receipt/${reg.reg_id}`;
+
+  const members = Array.isArray(reg.members) ? reg.members : JSON.parse(reg.members||'[]');
+  const rows = [
+    ['Event',    'Hackathon'],
+    ['Team',     reg.team_name],
+    ['Members',  members.join(' · ')],
+    ['Contact',  reg.contact],
+    ['Email',    reg.email],
+    ['UTR',      reg.utr],
+    ['Fee',      '₹200'],
+    ['Date',     'May 15–16, 2025'],
+    ['Venue',    'DAMS, Bangalore'],
+  ];
+  document.getElementById('cf-details').innerHTML = rows.map(([k,v]) =>
+    `<div class="cf-row"><span class="cf-k">${k}</span><span class="cf-v">${v}</span></div>`
+  ).join('');
+
+  window.scrollTo({top:document.getElementById('reg-section').offsetTop-80, behavior:'smooth'});
+  launchConfetti();
+  showToast('Registration successful! 🎉', 'success');
+}
+
+function copyUPI() {
+  navigator.clipboard.writeText('9876543210@upi').then(()=>showToast('UPI ID copied!','success'));
+}
+
+function shareReg() {
+  const text = `I just registered for Hackathon at Techverse 2025! ID: ${regId} — techverse.bca.edu`;
+  if (navigator.share) {
+    navigator.share({title:'Techverse 2025', text, url: window.location.href});
+  } else {
+    navigator.clipboard.writeText(text).then(()=>showToast('Copied to clipboard!','success'));
+  }
+}
+
+// Toast
+function showToast(msg, type='info') {
+  const t = document.createElement('div');
+  t.className = `toast toast-${type}`;
+  t.textContent = msg;
+  document.getElementById('toast-container').appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('show'));
+  setTimeout(()=>{t.classList.remove('show'); setTimeout(()=>t.remove(),400)}, 3500);
+}
+
+// Confetti
+function launchConfetti() {
+  const colors = ['#673ab7','#ffca28','#9575cd','#ffffff','#4ade80','#f472b6'];
+  for (let i = 0; i < 100; i++) {
+    setTimeout(()=>{
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      const size = 5 + Math.random()*10;
+      c.style.cssText = `position:fixed;top:-20px;left:${Math.random()*100}vw;width:${size}px;height:${size}px;background:${colors[~~(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation:confettiFall ${1.5+Math.random()*2}s linear forwards;animation-delay:${Math.random()*.6}s;z-index:99999;pointer-events:none;`;
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(), 4000);
+    }, i*25);
+  }
+}
+</script>
+</body>
+</html>

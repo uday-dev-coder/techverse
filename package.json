@@ -1,0 +1,11 @@
+{
+  "name": "techverse-2025",
+  "version": "1.0.0",
+  "description": "Techverse 2025 Full-Stack Registration Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --no-warnings server.js",
+    "dev": "node --no-warnings --watch server.js"
+  },
+  "engines": { "node": ">=22.0.0" }
+}

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin — Techverse 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Space+Grotesk:wght@400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--P:#673ab7;--S:#9575cd;--A:#ffca28;--BG:#07060f;--W:#fff;--DIM:rgba(255,255,255,.55)}
+body{background:var(--BG);color:var(--W);font-family:'Space Grotesk',sans-serif;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(103,58,183,.014) 2px,rgba(103,58,183,.014) 4px);pointer-events:none;z-index:9999}
+
+/* LOGIN */
+#login-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--BG);z-index:9000}
+.login-box{background:rgba(103,58,183,.08);border:1px solid rgba(103,58,183,.3);padding:3rem;width:100%;max-width:400px;position:relative}
+.login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--P),var(--A))}
+.login-logo{font-family:'Black Han Sans',sans-serif;font-size:1.5rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.login-logo span{color:var(--A)}
+.login-sub{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--DIM);margin-bottom:2rem}
+.login-field{width:100%;padding:.9em 1.1em;background:rgba(255,255,255,.04);border:1px solid rgba(103,58,183,.3);color:var(--W);font-family:'Space Grotesk',sans-serif;font-size:.95rem;outline:none;margin-bottom:1rem;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:.25s}
+.login-field:focus{border-color:var(--S);box-shadow:0 0 0 3px rgba(103,58,183,.12)}
+.login-btn{width:100%;padding:.9em;background:var(--A);color:#000;border:none;cursor:pointer;font-family:'Black Han Sans',sans-serif;font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:.25s}
+.login-btn:hover{background:var(--W)}
+.login-err{color:#f87171;font-size:.85rem;margin-top:.8rem;min-height:1.2rem}
+
+/* ADMIN LAYOUT */
+#admin-app{display:none}
+.admin-header{background:rgba(7,6,15,.9);border-bottom:1px solid rgba(103,58,183,.25);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)}
+.admin-logo{font-family:'Black Han Sans',sans-serif;font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase}
+.admin-logo span{color:var(--A)}
+.admin-logo small{font-family:'Share Tech Mono',monospace;font-size:.55rem;letter-spacing:.16em;color:var(--DIM);margin-left:.6rem}
+.admin-nav{display:flex;gap:.5rem}
+.anav-btn{padding:.45em 1.1em;background:transparent;border:1px solid rgba(103,58,183,.25);color:var(--DIM);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.25s;font-family:'Space Grotesk',sans-serif}
+.anav-btn.active,.anav-btn:hover{background:rgba(103,58,183,.15);border-color:rgba(103,58,183,.5);color:var(--W)}
+.logout-btn{padding:.45em 1em;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:#f87171;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:.25s;font-family:'Space Grotesk',sans-serif}
+.logout-btn:hover{background:rgba(248,113,113,.2)}
+
+.admin-body{max-width:1200px;margin:0 auto;padding:2rem}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
+.stat-card{background:rgba(103,58,183,.08);border:1px solid rgba(103,58,183,.22);padding:1.4rem;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--P),var(--A))}
+.stat-num{font-family:'Black Han Sans',sans-serif;font-size:2.2rem;color:var(--A);display:block;line-height:1}
+.stat-label{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--DIM);margin-top:.3rem;display:block}
+.stat-card.revenue .stat-num{color:#4ade80}
+
+/* EVENTS breakdown */
+.event-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.8rem;margin-bottom:2rem}
+.ev-stat{background:rgba(103,58,183,.06);border:1px solid rgba(103,58,183,.18);padding:1rem;text-align:center}
+.ev-stat-name{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--DIM);margin-bottom:.4rem}
+.ev-stat-num{font-family:'Black Han Sans',sans-serif;font-size:1.8rem;color:var(--S)}
+
+/* TABLE */
+.table-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.8rem}
+.table-controls{display:flex;gap:.6rem;flex-wrap:wrap}
+.tctrl{padding:.5em .9em;background:rgba(103,58,183,.08);border:1px solid rgba(103,58,183,.2);color:var(--DIM);font-size:.78rem;font-weight:600;letter-spacing:.06em;cursor:pointer;transition:.2s;font-family:'Space Grotesk',sans-serif}
+.tctrl:hover,.tctrl.active{background:rgba(103,58,183,.2);border-color:rgba(103,58,183,.5);color:var(--W)}
+.search-box{padding:.5em .9em;background:rgba(255,255,255,.04);border:1px solid rgba(103,58,183,.25);color:var(--W);font-family:'Space Grotesk',sans-serif;font-size:.82rem;width:220px;outline:none;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%)}
+.search-box:focus{border-color:var(--S)}
+.search-box::placeholder{color:rgba(255,255,255,.2)}
+
+.regs-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.regs-table th{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--DIM);padding:.8rem 1rem;text-align:left;border-bottom:2px solid rgba(103,58,183,.3);white-space:nowrap}
+.regs-table td{padding:.8rem 1rem;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle}
+.regs-table tr:hover td{background:rgba(103,58,183,.05)}
+.reg-id-cell{font-family:'Share Tech Mono',monospace;font-size:.78rem;color:var(--A)}
+.event-badge{display:inline-block;padding:.2em .7em;font-family:'Share Tech Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;border-radius:2px}
+.event-hackathon{background:rgba(103,58,183,.2);border:1px solid rgba(103,58,183,.4);color:var(--S)}
+.event-shortfilm{background:rgba(255,202,40,.1);border:1px solid rgba(255,202,40,.3);color:var(--A)}
+.event-debate{background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60a5fa}
+.event-itquiz{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399}
+.event-debugging{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:#f87171}
+.status-badge{display:inline-block;padding:.2em .6em;font-size:.68rem;font-weight:600;border-radius:2px}
+.status-pending{background:rgba(255,202,40,.1);border:1px solid rgba(255,202,40,.3);color:var(--A)}
+.status-confirmed{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);color:#4ade80}
+.status-rejected{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:#f87171}
+.action-btn{padding:.3em .7em;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid;transition:.2s;font-family:'Space Grotesk',sans-serif;margin-right:.3rem}
+.btn-confirm{background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.3);color:#4ade80}
+.btn-confirm:hover{background:rgba(74,222,128,.2)}
+.btn-reject{background:rgba(255,202,40,.1);border-color:rgba(255,202,40,.3);color:var(--A)}
+.btn-reject:hover{background:rgba(255,202,40,.2)}
+.btn-delete{background:rgba(248,113,113,.08);border-color:rgba(248,113,113,.3);color:#f87171}
+.btn-delete:hover{background:rgba(248,113,113,.2)}
+.btn-view{background:rgba(103,58,183,.15);border-color:rgba(103,58,183,.4);color:var(--S)}
+.btn-view:hover{background:rgba(103,58,183,.25)}
+.members-cell{font-size:.8rem;color:var(--DIM);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.empty-state{text-align:center;padding:4rem;color:var(--DIM);font-family:'Share Tech Mono',monospace;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase}
+
+/* Toast */
+#atoast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ade80;padding:.8em 1.8em;font-size:.85rem;font-weight:600;transition:transform .35s cubic-bezier(.34,1.56,.64,1);z-index:99999;pointer-events:none;opacity:0}
+#atoast.show{transform:translateX(-50%) translateY(0);opacity:1}
+#atoast.error{background:rgba(248,113,113,.15);border-color:rgba(248,113,113,.4);color:#f87171}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Tech<span>verse</span> 2025</div>
+    <div class="login-sub">Admin Dashboard</div>
+    <input class="login-field" type="password" id="admin-pass" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <button class="login-btn" onclick="doLogin()">Login →</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="admin-app">
+  <header class="admin-header">
+    <div>
+      <span class="admin-logo">Tech<span>verse</span> 2025 <small>Admin</small></span>
+    </div>
+    <div class="admin-nav">
+      <button class="anav-btn active" onclick="showTab('overview')">Overview</button>
+      <button class="anav-btn" onclick="showTab('registrations')">Registrations</button>
+      <button class="logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="admin-body">
+
+    <!-- OVERVIEW TAB -->
+    <div id="tab-overview">
+      <div style="margin-bottom:1.5rem">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--A);margin-bottom:.3rem">Dashboard</div>
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:2rem;text-transform:uppercase">Overview</div>
+      </div>
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card"><span class="stat-num" id="s-total">—</span><span class="stat-label">Total Registrations</span></div>
+        <div class="stat-card revenue"><span class="stat-num" id="s-rev">—</span><span class="stat-label">Total Revenue (₹)</span></div>
+        <div class="stat-card"><span class="stat-num" id="s-hck">—</span><span class="stat-label">Hackathon</span></div>
+        <div class="stat-card"><span class="stat-num" id="s-sfm">—</span><span class="stat-label">Short Film</span></div>
+        <div class="stat-card"><span class="stat-num" id="s-dbt">—</span><span class="stat-label">Debate</span></div>
+        <div class="stat-card"><span class="stat-num" id="s-quiz">—</span><span class="stat-label">IT Quiz</span></div>
+        <div class="stat-card"><span class="stat-num" id="s-dbg">—</span><span class="stat-label">Debugging</span></div>
+      </div>
+
+      <div style="margin-bottom:1rem;font-family:'Share Tech Mono',monospace;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--DIM)">Recent Registrations</div>
+      <table class="regs-table" id="recent-table">
+        <thead><tr>
+          <th>Reg ID</th><th>Event</th><th>Team</th><th>Email</th><th>Status</th><th>Date</th>
+        </tr></thead>
+        <tbody id="recent-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- REGISTRATIONS TAB -->
+    <div id="tab-registrations" style="display:none">
+      <div class="table-header">
+        <div>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--A);margin-bottom:.3rem">All Records</div>
+          <div style="font-family:'Black Han Sans',sans-serif;font-size:2rem;text-transform:uppercase">Registrations</div>
+        </div>
+        <div class="table-controls">
+          <input class="search-box" type="text" id="search-box" placeholder="Search team / email / ID..." oninput="filterRegs()"/>
+          <button class="tctrl active" onclick="filterByEvent('')">All</button>
+          <button class="tctrl" onclick="filterByEvent('hackathon')">Hackathon</button>
+          <button class="tctrl" onclick="filterByEvent('shortfilm')">Short Film</button>
+          <button class="tctrl" onclick="filterByEvent('debate')">Debate</button>
+          <button class="tctrl" onclick="filterByEvent('itquiz')">IT Quiz</button>
+          <button class="tctrl" onclick="filterByEvent('debugging')">Debugging</button>
+          <button class="tctrl" onclick="exportCSV()">Export CSV</button>
+        </div>
+      </div>
+      <table class="regs-table">
+        <thead><tr>
+          <th>Reg ID</th><th>Event</th><th>Team Name</th><th>Members</th><th>Contact</th><th>Email</th><th>UTR</th><th>Status</th><th>Date</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="regs-tbody"></tbody>
+      </table>
+      <div id="regs-empty" class="empty-state" style="display:none">No registrations found</div>
+    </div>
+  </div>
+</div>
+
+<div id="atoast"></div>
+
+<script>
+let currentEvent = '';
+let allRegs = [];
+
+async function doLogin() {
+  const pass = document.getElementById('admin-pass').value;
+  const err  = document.getElementById('login-err');
+  err.textContent = '';
+  try {
+    const res  = await fetch('/admin/login', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pass})});
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-app').style.display    = 'block';
+      loadOverview();
+    } else {
+      err.textContent = 'Wrong password';
+    }
+  } catch { err.textContent = 'Connection error'; }
+}
+
+async function doLogout() {
+  await fetch('/admin/logout', {method:'POST'});
+  location.reload();
+}
+
+function showTab(tab) {
+  document.getElementById('tab-overview').style.display      = tab==='overview'      ? 'block' : 'none';
+  document.getElementById('tab-registrations').style.display = tab==='registrations' ? 'block' : 'none';
+  document.querySelectorAll('.anav-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  if (tab === 'registrations') loadAllRegs();
+}
+
+async function loadOverview() {
+  const res  = await fetch('/api/admin/stats');
+  const data = await res.json();
+  if (!data.success) return;
+  document.getElementById('s-total').textContent = data.total;
+  document.getElementById('s-rev').textContent   = '₹' + data.revenue;
+  const ev = {hackathon:0,shortfilm:0,debate:0,itquiz:0,debugging:0};
+  data.byEvent.forEach(e => ev[e.event] = e.count);
+  document.getElementById('s-hck').textContent  = ev.hackathon;
+  document.getElementById('s-sfm').textContent  = ev.shortfilm;
+  document.getElementById('s-dbt').textContent  = ev.debate;
+  document.getElementById('s-quiz').textContent = ev.itquiz;
+  document.getElementById('s-dbg').textContent  = ev.debugging;
+  const tbody = document.getElementById('recent-tbody');
+  tbody.innerHTML = data.recent.length === 0
+    ? '<tr><td colspan="6" style="text-align:center;padding:2rem;color:rgba(255,255,255,.3);font-size:.85rem">No registrations yet</td></tr>'
+    : data.recent.map(r => `<tr>
+        <td class="reg-id-cell">${r.reg_id}</td>
+        <td><span class="event-badge event-${r.event}">${r.event}</span></td>
+        <td>${r.team_name}</td>
+        <td style="font-size:.8rem;color:rgba(255,255,255,.6)">${r.email}</td>
+        <td><span class="status-badge status-${r.status}">${r.status}</span></td>
+        <td style="font-size:.78rem;color:rgba(255,255,255,.4)">${r.created_at.split(' ')[0]}</td>
+      </tr>`).join('');
+}
+
+async function loadAllRegs() {
+  const search = document.getElementById('search-box').value;
+  const url = `/api/admin/registrations?event=${currentEvent}&search=${encodeURIComponent(search)}`;
+  const res  = await fetch(url);
+  const data = await res.json();
+  if (!data.success) return;
+  allRegs = data.registrations;
+  renderRegsTable(allRegs);
+}
+
+function renderRegsTable(regs) {
+  const tbody = document.getElementById('regs-tbody');
+  const empty = document.getElementById('regs-empty');
+  if (regs.length === 0) { tbody.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display = 'none';
+  tbody.innerHTML = regs.map(r => `<tr id="row-${r.reg_id}">
+    <td class="reg-id-cell">${r.reg_id}</td>
+    <td><span class="event-badge event-${r.event}">${r.event}</span></td>
+    <td><strong>${r.team_name}</strong></td>
+    <td class="members-cell" title="${r.members.join(', ')}">${r.members.join(', ')}</td>
+    <td style="font-size:.8rem">${r.contact}</td>
+    <td style="font-size:.8rem">${r.email}</td>
+    <td style="font-family:'Share Tech Mono',monospace;font-size:.75rem;color:rgba(255,255,255,.5)">${r.utr}</td>
+    <td><span class="status-badge status-${r.status}" id="stat-${r.reg_id}">${r.status}</span></td>
+    <td style="font-size:.75rem;color:rgba(255,255,255,.4);white-space:nowrap">${r.created_at.split(' ')[0]}</td>
+    <td style="white-space:nowrap">
+      <button class="action-btn btn-view" onclick="window.open('/receipt/${r.reg_id}','_blank')">View</button>
+      <button class="action-btn btn-confirm" onclick="setStatus('${r.reg_id}','confirmed')">✓</button>
+      <button class="action-btn btn-reject" onclick="setStatus('${r.reg_id}','pending')">↩</button>
+      <button class="action-btn btn-delete" onclick="deleteReg('${r.reg_id}')">✕</button>
+    </td>
+  </tr>`).join('');
+}
+
+function filterByEvent(ev) {
+  currentEvent = ev;
+  document.querySelectorAll('.tctrl').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  loadAllRegs();
+}
+
+function filterRegs() { loadAllRegs(); }
+
+async function setStatus(regId, status) {
+  await fetch(`/api/admin/status/${regId}`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});
+  const el = document.getElementById('stat-'+regId);
+  if (el) { el.textContent = status; el.className = `status-badge status-${status}`; }
+  showAToast('Status updated');
+}
+
+async function deleteReg(regId) {
+  if (!confirm(`Delete registration ${regId}? This cannot be undone.`)) return;
+  await fetch(`/api/admin/delete/${regId}`, {method:'POST'});
+  document.getElementById('row-'+regId)?.remove();
+  showAToast('Deleted', true);
+  loadOverview();
+}
+
+function exportCSV() {
+  const rows = allRegs.map(r => [
+    r.reg_id, r.event, r.team_name, r.members.join(' | '), r.contact, r.email, r.utr, r.status, r.created_at
+  ].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
+  const csv = ['Reg ID,Event,Team,Members,Contact,Email,UTR,Status,Date', ...rows].join('\n');
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(new Blob([csv], {type:'text/csv'})),
+    download: 'techverse_registrations.csv'
+  });
+  a.click();
+  showAToast('CSV exported');
+}
+
+function showAToast(msg, isErr=false) {
+  const t = document.getElementById('atoast');
+  t.textContent = msg;
+  t.className = isErr ? 'error show' : 'show';
+  setTimeout(()=>t.className='', 3000);
+}
+
+// Check if already logged in on page load
+fetch('/api/admin/stats').then(r=>{
+  if (r.ok) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display    = 'block';
+    loadOverview();
+  }
+}).catch(()=>{});
+</script>
+</body>
+</html>
